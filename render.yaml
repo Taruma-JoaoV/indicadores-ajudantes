@@ -2,7 +2,8 @@ services:
   - type: web
     name: indicadores-ajudantes
     env: python
-    buildCommand: ""
+    buildCommand: |
+      apt-get update && apt-get install -y freetds-dev gcc && pip install -r requirements.txt
     startCommand: gunicorn app:app
     envVars:
       - key: DATABASE_URL
