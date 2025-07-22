@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Ajudante</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='painel.css') }}">
+</head>
+
+<body>
+    <div class="topo">
+        <h1>Bem-vindo ao Painel de Indicadores</h1>
+        <div class="links-wrapper">
+            <a href="{{ url_for('login') }}" class="links" id="sair">Sair</a>
+        </div>
+    </div>
+
+    <h2>Filtrar Período Mensal</h2>
+    <div id="filtros">
+        <form method="GET" action="/painel">
+            <label for="mes">Escolha o mês:</label>
+            <input type="month" id="mes" name="mes" value="{{ mes_atual }}">
+            <button id="busca" type="submit" id="filtroMes">Buscar</button>
+        </form>
+    </div>
+
+    <h2>Indicadores</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Quantidade de Paletes</th>
+                <th>Meta</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in dados %}
+                <tr>
+                    <td>{{ item.data }}</td>
+                    <td>{{ item.valor }}</td>
+                    <td>{{ item.meta }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Média</td>
+                <td class="{% if media_valor < media_meta %}bg-vermelho{% else %}bg-verde{% endif %}">{{ media_valor }}</td>
+                <td>{{ media_meta }}</td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

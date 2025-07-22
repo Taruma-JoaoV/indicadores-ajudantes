@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Coordenador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='painel_coordenador.css') }}">
+</head>
+
+<body>
+    <div id="cabecalho">
+        <h1>Painel do Coordenador</h1>
+        <form action="{{ url_for('logout') }}" method="get" style="text-align: right;">
+            <button type="submit" id="logout">SAIR</button>
+        </form>
+    </div>
+
+    <form method="get">        
+        <label for="ajudante">Selecionar Ajudante:</label>
+        <select id="ajudante" name="ajudante">
+            <option value="" {% if not ajudante_selecionado %}disabled selected{% endif %}>-- Selecione um ajudante --</option>
+            {% for nome in lista_ajudantes %}
+                <option value="{{ nome }}" {% if nome == ajudante_selecionado %}selected{% endif %}>
+                    {{ nome }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="mes">Filtrar por mês:</label>
+        <input type="month" id="mes" name="mes" value="{{ mes_selecionado }}">
+
+        <button type="submit">Filtrar</button>
+    </form>
+
+{% if dados and ajudante_selecionado %}
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Paletes</th>
+                <th>Meta</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in dados %}
+            <tr>
+                <td>{{ item.data }}</td>
+                <td>{{ item.valor }}</td>
+                <td>{{ item.meta }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><strong>Média</strong></td>
+                <td class="{% if media_valor < media_meta %}bg-vermelho{% else %}bg-verde{% endif %}">
+                    {{ media_valor }}
+                </td>
+                <td>{{ media_meta }}</td>
+            </tr>
+        </tfoot>
+    </table>
+{% else %}
+    {% if ajudante_selecionado %}
+        <p>Nenhum dado encontrado para esse ajudante no período selecionado.</p>
+    {% endif %}
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login- Ajudantes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Consulta de Indicadores</h2>
+        <form method="POST">
+            <input type="text" name="id_ajudante" placeholder="ID do Ajudante" required>
+            <input type="password" name="senha" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+        {% if mensagem %}
+            <p class="mensagem">{{ mensagem }}</p>
+        {% endif %}
+    </div>
+
+    <footer>
+        <img src="../static/logo.jpg" width="80" height="80">
+        <p>João Vitor Borato - Analista de Rota - Tarumã JF</p>
+        <p>joaov.taruma@gmail.com</p>
+    </footer>
+</body>
+</html>

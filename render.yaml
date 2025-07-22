@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: indicadores-ajudantes
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn app:app
+    envVars:
+      - key: DATABASE_URL
+        value: "SUA_STRING_DE_CONEXÃO_DO_SQL_SERVER"
